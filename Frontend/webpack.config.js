@@ -4,7 +4,7 @@ var config = require("./build.json");
 
 module.exports = {
     entry: {
-        'bundle': './src/app/app.ts'
+        'bundle': './src/app/app.module.ts'
     },
     output: {
         path: path.resolve(config.PATH),
