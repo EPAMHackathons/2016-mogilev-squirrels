@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using WebApi.Models;
+using WebApi.Models.Gallery;
 
 namespace WebApi.Models
 {
@@ -31,5 +32,7 @@ namespace WebApi.Models
         public DbSet<UserSchedule> UserSchedule { get; set; }
 
 		public DbSet<DaySchedule> DaySchedules { get; set; }
+
+		public DbSet<DogProfile> DogProfile { get; set; }
 	}
 }
