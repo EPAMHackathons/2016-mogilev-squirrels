@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IEnumerable<Action> GetAction()
         {
-		        return _context.Action.ToList();
+			return _context.Action.ToList();
         }
 
         // GET: api/Actions/5
