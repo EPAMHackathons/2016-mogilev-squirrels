@@ -1,9 +1,9 @@
 import {NavbarController} from './navbar.controller';
-import {Navbar} from './navbar.component';
+import {NavbarDirective} from './navbar.directive';
 
 angular
     .module('app.core.navbar', [
 
     ])
-    .component('hdNavbar', new Navbar())
+    .directive('hdNavbar', NavbarDirective.create())
     .controller('NavbarController', NavbarController);

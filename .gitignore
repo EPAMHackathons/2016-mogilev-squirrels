@@ -245,6 +245,7 @@ paket-files/
 *.sln.iml
 
 /Frontend/src/vendor
+/Frontend/src/core/templates/templates.run.ts
 /WebSite/src/vendor
 /WebSite/src/WebSite/wwwroot/vendor
 /WebSite/src/WebSite/wwwroot/index.html
