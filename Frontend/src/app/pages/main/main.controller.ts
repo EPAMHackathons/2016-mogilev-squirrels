@@ -1,10 +1,12 @@
+import {BenefactorsService} from './benefactors.service';
+
 export class MainController {
-    public static $inject: Array<string> = [];
+    public static $inject: Array<string> = ['BenefactorsService'];
 
     public successes: Array<any>;
     public benefactors: Array<any>;
 
-    constructor() {
+    constructor(private _benefactorsService: BenefactorsService) {
         this.successes = [
             {
                 text: 'Зарегистрировано'
@@ -20,16 +22,12 @@ export class MainController {
             }
         ];
 
-        this.benefactors = [
-            {
-                fullName: 'qwe qwe qwe'
-            }, {
-                fullName: 'qwe qwe qwe'
-            }, {
-                fullName: 'qwe qwe qwe'
-            }, {
-                fullName: 'qwe qwe qwe'
-            }
-        ];
+        this._benefactorsService.getBenefactors().then((benefactors) => {
+            this.benefactors = <Array<any>>benefactors.data;
+            this.benefactors.forEach((benefactor) => {
+                benefactor.url = {'background-image':'url(' + benefactor.ImgUrl + ''};
+            })
+            console.log(this.benefactors);
+        });
     }
 }
