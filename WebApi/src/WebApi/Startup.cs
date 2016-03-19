@@ -58,6 +58,11 @@ namespace WebApi
 
             services.AddMvc();
 
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<WebApiContext>(options =>
+                    options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WebApiContext-9d218697-d4fa-4e26-97e1-b104348b22bf;Trusted_Connection=True;MultipleActiveResultSets=true"));
+
             // Add application services.
         }
 
