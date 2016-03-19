@@ -24,8 +24,10 @@ namespace WebApi.Controllers
         [HttpGet]
         public IEnumerable<UserSchedule> GetUserSchedule()
         {
-            return _context.UserSchedule
-				.Include(sched => sched.Schedule);
+	        return _context.UserSchedule
+		        .Include(sched => sched.Schedule)
+		        .ThenInclude(t => t.Actions);
+
         }
 
         // GET: api/UserSchedules/5
