@@ -12,15 +12,15 @@ export function configureStates(
 function getStates() {
     return [
         {
-            state: 'timeline',
+            state: 'gallery',
             config: {
-                url: '/timeline',
+                url: '/gallery',
                 templateProvider: ($templateCache: ng.ITemplateCacheService) => {
-                    return $templateCache.get('pages/timeline/timeline.tpl.html');
+                    return $templateCache.get('pages/galleryPage/galleryPage.tpl.html');
                 },
-                controller: 'TimelineController',
+                controller: 'GalleryPageController',
                 controllerAs: 'ctrl',
-                title: 'timeline',
+                title: 'galleryPage',
             }
         }
     ];

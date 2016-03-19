@@ -1,0 +1,20 @@
+<div class="timeline-component">
+    <div class="container">
+        <div class="page-header">
+            <h1 id="timeline">Календарь</h1>
+        </div>
+        <ul class="timeline">
+            <li ng-repeat="item in ctrl.items[0].Schedule" ng-class="{'timeline-inverted' : $even}">
+                <div class="timeline-badge"><i class="glyphicon glyphicon-check">{{item.Date}}</i></div>
+                <div class="timeline-panel">
+                    <div class="timeline-heading">
+                        <h4 class="timeline-title">{{item.Actions[0].Description.Value}}</h4>
+                    </div>
+                    <div class="timeline-body">
+                        <p>{{item.Actions[0].Description}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

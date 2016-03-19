@@ -10,6 +10,6 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>WebApi.Models.WebApiContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <ShowAllFiles>true</ShowAllFiles>
+    <NameOfLastUsedPublishProfile>hackaton-happydog-api - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

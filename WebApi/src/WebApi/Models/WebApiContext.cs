@@ -30,5 +30,6 @@ namespace WebApi.Models
 
         public DbSet<UserSchedule> UserSchedule { get; set; }
 
+		public DbSet<DaySchedule> DaySchedules { get; set; }
 	}
 }

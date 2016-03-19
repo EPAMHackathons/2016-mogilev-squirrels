@@ -67,6 +67,7 @@
 			appUser.TokenVk = vk.AccessToken;
 			appUser.UserName = profile.FirstName + " " + profile.LastName;
 			appUser.Email = user.Email;
+			appUser.UserAvatarUrl = this.GetUserPicture(vk);
 
 			_userManager.CreateAsync(appUser, user.Password);
 			_signInManager.SignInAsync(appUser, true);
@@ -76,8 +77,14 @@
 			return result;
 		}
 
-		[HttpGet("user/imageUrl")]
-		public string GetUserPicture()
+		[HttpGet("userInfo")]
+		public ApplicationUser UserInfo()
+		{
+			var user = this.User.Identities as ApplicationUser;
+			return user;
+		}
+
+		private string GetUserPicture(VkApi api)
 		{
 			var user = User.Identity as ApplicationUser;
 
@@ -85,9 +92,6 @@
 			{
 				return string.Empty;
 			}
-
-			VkApi api = new VkApi();
-			api.Authorize(user.TokenVk);
 
 			return api.Photo.GetOwnerPhotoUploadServer(api.UserId.Value).UploadUrl;
 		}

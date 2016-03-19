@@ -11,5 +11,6 @@ namespace WebApi.Models
 	public class ApplicationUser : IdentityUser
 	{
 		public string TokenVk { get; set; }
+		public string UserAvatarUrl { get; set; }
 	}
 }
