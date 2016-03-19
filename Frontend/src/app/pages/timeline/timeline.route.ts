@@ -12,9 +12,9 @@ export function configureStates(
 function getStates() {
     return [
         {
-            state: 'main',
+            state: 'timeline',
             config: {
-                url: '/',
+                url: '/timeline',
                 templateProvider: ($templateCache: ng.ITemplateCacheService) => {
                     return $templateCache.get('pages/timeline/timeline.tpl.html');
                 },

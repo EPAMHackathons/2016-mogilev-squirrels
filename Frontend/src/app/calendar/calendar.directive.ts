@@ -17,28 +17,7 @@ export class Calendar implements ng.IDirective {
     }
 
     private render($ctrl):void {
-        var data:any = {
-            "nodes": [
-                {"id": 0, "name": "A"},
-                {"id": 1, "name": "B"},
-                {"id": 2, "name": "C"},
-                {"id": 3, "name": "D"},
-                {"id": 4, "name": "E"}
-            ],
-            "links": [
-                {"source": 0, "target": 1, "name": "A-B"},
-                {"source": 0, "target": 2, "name": "A-C-1"},
-                {"source": 0, "target": 2, "name": "A-C-2"},
-                {"source": 0, "target": 2, "name": "A-C-3"},
-                {"source": 0, "target": 3, "name": "A-D-1"},
-                {"source": 0, "target": 3, "name": "A-D-2"},
-                {"source": 0, "target": 4, "name": "A-E-1"},
-                {"source": 0, "target": 4, "name": "A-E-2"},
-                {"source": 0, "target": 4, "name": "A-E-3"},
-                {"source": 0, "target": 4, "name": "A-E-4"},
-                {"source": 0, "target": 4, "name": "A-E-5"}
-            ]
-        };
+        var data:any = $ctrl.daysNodes;
 
         var mLinkNum = {};
 
@@ -46,8 +25,8 @@ export class Calendar implements ng.IDirective {
 
         setLinkIndexAndNum();
 
-        var w = 600,
-            h = 500;
+        var w = 900,
+            h = 900;
 
         var force = d3.layout.force()
             .nodes(d3.values(data.nodes))
