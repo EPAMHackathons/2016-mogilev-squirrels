@@ -1,3 +1,5 @@
 {
-  "PATH" : "../WebSite/src/WebSite/wwwroot/"
+  "PATH" : "../WebSite/src/WebSite/wwwroot/",
+  "ASSETS" : "/assets",
+  "VENDOR" : "/vendor"
 }

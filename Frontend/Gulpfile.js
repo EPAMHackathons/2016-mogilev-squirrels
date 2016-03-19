@@ -1,19 +1,24 @@
 'use strict';
 
 var gulp = require("gulp");
+var config = require('./build.json');
+
 var templateCache = require('gulp-angular-templatecache');
-var sass = require('gulp-sass');
+var less = require('gulp-less');
 var webpack = require('webpack');
 var gulpWebpack = require('gulp-webpack');
 var gutil = require("gulp-util");
 
-var destinationFolder = "../WebSite/";
+var destinationFolder = config.PATH;
 
 var bowerDirectory = "src/vendor";
 var bowerComponentsPath = "./" + bowerDirectory + "/**/*.*";
 
 var assetDirectory = "src/assets";
 var assetDirectoryPath = "./" + assetDirectory + "/**/*.*";
+
+var templateDirectory = "src";
+var templateDirectoryPath = "./" + templateDirectory + "/index.html";
 
 var copyTask = function (src, dest) {
     gulp.src(src)
@@ -22,16 +27,22 @@ var copyTask = function (src, dest) {
 
 gulp.task('copy_bower', function () {
     copyTask(bowerComponentsPath
-        , destinationFolder + bowerDirectory + "/");
+        , destinationFolder + "vendor/");
 });
 
 gulp.task('copy_assets', function () {
 
     copyTask(assetDirectoryPath,
-        destinationFolder + assetDirectory + "/");
+        destinationFolder + "assets/");
 });
 
-gulp.task('copy_all', ['copy_bower', 'copy_assets']);
+gulp.task('copy_template', function () {
+
+    copyTask(templateDirectoryPath,
+        destinationFolder);
+});
+
+gulp.task('copy_all', ['copy_bower', 'copy_assets', 'copy_template']);
 
 gulp.task("webpack", function (callback) {
     // run webpack
@@ -56,9 +67,9 @@ gulp.task('templatecache', function () {
         .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('sass', function () {
-    gulp.src('./src/app/app.scss')
-        .pipe(sass())
+gulp.task('less', function () {
+    gulp.src('./src/app/app.less')
+        .pipe(less())
         .pipe(gulp.dest(destinationFolder));
 });
 
@@ -66,8 +77,8 @@ gulp.task('webpack:watch', function () {
     gulp.watch('./src/app/**/*.ts', ['webpack']);
 });
 
-gulp.task('sass:watch', function () {
-    gulp.watch('./src/app/**/*.scss', ['sass']);
+gulp.task('less:watch', function () {
+    gulp.watch('./src/app/**/*.less', ['less']);
 });
 
 gulp.task('templatecache:watch', function () {
@@ -79,9 +90,9 @@ gulp.task('copy_all:watch', function () {
     gulp.watch(assetDirectoryPath, ['copy_assets']);
 });
 
-gulp.task('watch', ['templatecache', 'sass', 'webpack', 'copy_all', 'templatecache:watch', 'sass:watch', 'webpack:watch']);
+gulp.task('watch', ['templatecache', 'less', 'webpack', 'copy_all', 'templatecache:watch', 'sass:watch', 'webpack:watch']);
 
-gulp.task('default', ['copy_all', 'templatecache', 'sass', 'webpack'])
+gulp.task('default', ['copy_all', 'templatecache', 'less', 'webpack'])
 
 var config = {
     htmltemplates: 'src/app/**/*.html',

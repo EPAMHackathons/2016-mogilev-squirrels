@@ -243,3 +243,11 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+/Frontend/src/vendor
+/WebSite/src/vendor
+/WebSite/src/WebSite/wwwroot/vendor
+/WebSite/src/WebSite/wwwroot/index.html
+/WebSite/src/WebSite/wwwroot/bundle.js
+/WebSite/src/WebSite/wwwroot/bundle.js.map
+/WebSite/src/WebSite/wwwroot/app.css
