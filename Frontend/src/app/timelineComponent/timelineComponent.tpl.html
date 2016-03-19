@@ -5,7 +5,8 @@
         </div>
         <ul class="timeline">
             <li ng-repeat="item in ctrl.items[0].Schedule" ng-class="{'timeline-inverted' : $even, 'timeline-none': !$even}">
-                <div class="timeline-badge date hover" date-format><p></p>
+                <div class="timeline-badge date hover" date-format>
+                    <p></p>
                 </div>
                 <div class="timeline-panel">
                     <div ng-repeat="action in item.Actions">
@@ -19,5 +20,10 @@
                 </div>
             </li>
         </ul>
+    </div>
+
+
+    <div class="new-event">
+        <h4 class="new-event-text">+</h2>
     </div>
 </div>
