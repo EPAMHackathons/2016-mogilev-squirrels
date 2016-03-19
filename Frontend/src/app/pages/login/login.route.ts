@@ -14,7 +14,7 @@ function getStates() {
 		{
 			state: 'login',
 			config: {
-				url: '/',
+				url: '/login',
 				templateProvider: ($templateCache: ng.ITemplateCacheService) => {
 					return $templateCache.get('pages/login/login.tpl.html');
 				},
