@@ -5,7 +5,7 @@ import {MainController} from './main.controller';
 
 angular
     .module('app.pages.main', [
-        'app.core'
+        'app.core',
     ])
     .controller('MainController', MainController)
     .config(configureStates);

@@ -3,20 +3,20 @@ export class Calendar implements ng.IDirective {
     public controller:string = 'CalendarController';
     public controllerAs:string = '$ctrl';
     public bindToController:boolean = true;
-    public templateUrl:'calendar/calendar.tpl.html';
+    public templateUrl:string = 'calendar/calendar.tpl.html';
     public link:ng.IDirectiveLinkFn;
 
     public constructor() {
         this.link = ($scope, element, attr, $ctrl)=>this.linkFn($scope, element, attr, $ctrl);
     }
 
-    public linkFn($scope, element, attr, $ctrl) {
-        $ctrl.init()();
+    private linkFn($scope, element, attr, $ctrl) {
+        $ctrl.init();
 
-        this.render();
+        this.render($ctrl);
     }
 
-    private render():void {
+    private render($ctrl):void {
         var data:any = {
             "nodes": [
                 {"id": 0, "name": "A"},

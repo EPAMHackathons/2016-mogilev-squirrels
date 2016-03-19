@@ -3,5 +3,5 @@ import {Calendar} from "./calendar.directive";
 
 angular
     .module('hd.calendar', [])
-    .directive('hdCalendar', Calendar.create)
+    .directive('hdCalendar', Calendar.create())
     .controller('CalendarController', CalendarController);
