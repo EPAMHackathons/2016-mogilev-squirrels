@@ -8,7 +8,7 @@ export class TimelineComponentController {
 
     private init(scope) {
         this.timelineComponentService.getData().then((data)=> {
-            this.items = data;
+            this.items = data.data;
         });
     }
 }
