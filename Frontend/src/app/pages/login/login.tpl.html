@@ -1,19 +1,13 @@
-<br>
-<br>
-<br>
-<div class="loggin-page container">
-    <div class="row">
-        <label for="mail">Электронная почта:</label>
-        <input id="mail" type="email" ng-model="ctrl.Email">
-    </div>
-    <div class="row">
-        <label for="pass">Пароль:</label>
-        <input id="pass" type="password" ng-model="ctrl.Password">
-    </div>
-    <div class="row">
-        <img src="staff/images/social_buttons.jpg">
-    </div>
-    <div class="row">
-        <input type="button" value="Войти" ng-click="ctrl.Login()">
-    </div>
+<div class="container">
+    <form class="form-signin">
+        <h2 class="form-signin-heading">Вход в систему</h2>
+        <label for="inputEmail" class="sr-only">Емейл адрес</label>
+        <input ng-model="ctrl.Email" type="email" id="inputEmail" class="form-control" placeholder="Емейл адрес" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Пароль</label>
+        <input ng-model="ctrl.Password" type="password" id="inputPassword" class="form-control" placeholder="Пароль" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+
 </div>
+
+<!--<img src="staff/images/social_buttons.jpg">-->
