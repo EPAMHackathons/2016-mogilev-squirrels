@@ -9,12 +9,12 @@ export class LoginController {
     }
 
     private Login(): void {
-        this.http.post("http://hackaton-happydog-api.azurewebsites.net/api/account/register/vk", { Email: this.Email, Password: this.Password })
+        this.http.post("http://localhost:63930/api/account/register/vk", { Email: this.Email, Password: this.Password })
             .success(() => {
                 console.log("success");
             })
             .error((error) => {
-                console.log(error);
+                console.log("occured error", error);
             });
     }
 
