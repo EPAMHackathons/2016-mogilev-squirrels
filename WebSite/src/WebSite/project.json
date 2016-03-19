@@ -4,10 +4,12 @@
     "emitEntryPoint": true
   },
 
-  "dependencies": {
-    "Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final"
-  },
+	"dependencies": {
+		"Microsoft.AspNet.Cors": "6.0.0-rc1-final",
+		"Microsoft.AspNet.Cors.Core": "6.0.0-beta8",
+		"Microsoft.AspNet.IISPlatformHandler": "1.0.0-rc1-final",
+		"Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final"
+	},
 
   "commands": {
     "web": "Microsoft.AspNet.Server.Kestrel"
