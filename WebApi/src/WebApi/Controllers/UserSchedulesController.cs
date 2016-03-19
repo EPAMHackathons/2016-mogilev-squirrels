@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
@@ -23,7 +24,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public IEnumerable<UserSchedule> GetUserSchedule()
         {
-            return _context.UserSchedule;
+            return _context.UserSchedule
+				.Include(sched => sched.Schedule);
         }
 
         // GET: api/UserSchedules/5
