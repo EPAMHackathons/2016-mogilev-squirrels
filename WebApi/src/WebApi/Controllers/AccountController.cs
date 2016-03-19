@@ -7,6 +7,7 @@
 	using Microsoft.AspNet.Mvc;
 	using System.Linq;
 	using System.Threading.Tasks;
+	using VkNet;
 	using WebApi.Models;
 	using WebApi.ViewModels.Account;
 	#endregion
@@ -23,30 +24,6 @@
 		{
 			_signInManager = signInManager;
 			_userManager = userManager;
-		}
-
-		//
-		// POST: /Account/Login
-		[HttpPost("login")]
-		[AllowAnonymous]
-		public bool Login([FromBody]LoginViewModel model, string returnUrl = null)
-		{
-			bool isLogin = false;
-			// This doesn't count login failures towards account lockout
-			// To enable password failures to trigger account lockout, set lockoutOnFailure: true
-			ApplicationUser find = _userManager.Users.FirstOrDefault(x => x.Email == model.Email);
-			if (find != null)
-			{
-				var result = _signInManager.PasswordSignInAsync(find, model.Password, true, lockoutOnFailure: false);
-				result.Wait();
-				if (result.Result.Succeeded)
-				{
-					isLogin = true;
-				}
-			}
-
-			return isLogin;
-
 		}
 
 		//
@@ -74,6 +51,54 @@
 			{
 				return false;
 			}
+		}
+
+		[HttpPost("register/vk")]
+		[AllowAnonymous]
+		public bool RegisterWithVk([FromBody]LoginViewModel user)
+		{
+			bool result = false;
+
+			VkApi vk = this.VkInit(user.Email, user.Password);
+
+			var appUser = new ApplicationUser();
+
+			var profile = vk.Account.GetProfileInfo();
+			appUser.TokenVk = vk.AccessToken;
+			appUser.UserName = profile.FirstName + " " + profile.LastName;
+			appUser.Email = user.Email;
+
+			_userManager.CreateAsync(appUser, user.Password);
+			_signInManager.SignInAsync(appUser, true);
+
+			result = true;
+
+			return result;
+		}
+
+		[HttpGet("user/imageUrl")]
+		public string GetUserPicture()
+		{
+			var user = User.Identity as ApplicationUser;
+
+			if (user == null)
+			{
+				return string.Empty;
+			}
+
+			VkApi api = new VkApi();
+			api.Authorize(user.TokenVk);
+
+			return api.Photo.GetOwnerPhotoUploadServer(api.UserId.Value).UploadUrl;
+		}
+
+		private VkApi VkInit(string email, string password)
+		{
+			VkApi api = new VkApi();
+			int appId = 5363363;
+			api.Authorize(appId, email, password, VkNet.Enums.Filters.Settings.All);
+
+			return api;
 		}
 
 	}

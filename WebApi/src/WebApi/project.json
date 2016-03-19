@@ -27,7 +27,8 @@
         "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
         "Microsoft.Owin.Security.Cookies": "3.0.1",
         "Microsoft.Owin.Security.OAuth": "3.0.1",
-        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final"
+        "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
+        "VkNet": "1.21.0"
     },
 
   "commands": {
