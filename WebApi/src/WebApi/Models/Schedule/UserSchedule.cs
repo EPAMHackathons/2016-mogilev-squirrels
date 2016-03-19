@@ -7,7 +7,7 @@ namespace WebApi.Models
     public class UserSchedule
     {
 		[Required]
-	    public Guid Id { get; set; }
+	    public string Id { get; set; }
 
 	    public virtual ApplicationUser User { get; set; }
 
