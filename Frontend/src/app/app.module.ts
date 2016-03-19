@@ -5,16 +5,13 @@ import './pages/timeline/timeline.module';
 import './pages/galleryPage/galleryPage.module';
 import './success/success.module';
 
-
-import {run} from './app.run';
-
-angular
+import {run} from './app.run';import './pages/login/login.module';angular
     .module('app', [
         'app.core',
 
         'app.pages.main',
         'app.pages.galleryPage',
         'app.pages.timeline',
-        'app.pages.success'
 
+        'app.pages.success',        'app.pages.login'
     ]).run(run);

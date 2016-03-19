@@ -8,6 +8,7 @@
 	using System.Linq;
 	using System.Threading.Tasks;
 	using VkNet;
+	using VkNet.Enums.Filters;
 	using WebApi.Models;
 	using WebApi.ViewModels.Account;
 	#endregion
@@ -54,7 +55,6 @@
 		}
 
 		[HttpPost("register/vk")]
-		[AllowAnonymous]
 		public bool RegisterWithVk([FromBody]LoginViewModel user)
 		{
 			bool result = false;
@@ -86,14 +86,10 @@
 
 		private string GetUserPicture(VkApi api)
 		{
-			var user = User.Identity as ApplicationUser;
-
-			if (user == null)
-			{
-				return string.Empty;
-			}
-
-			return api.Photo.GetOwnerPhotoUploadServer(api.UserId.Value).UploadUrl;
+			long id = api.UserId.Value;
+			var user = api.Users.Get(id, ProfileFields.Photo200);
+			var photo = user.Photo200;
+			return photo.AbsoluteUri; //Photo.GetOwnerPhotoUploadServer(api.UserId.Value).UploadUrl;
 		}
 
 		private VkApi VkInit(string email, string password)
