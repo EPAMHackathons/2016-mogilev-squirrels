@@ -1,8 +1,11 @@
 .jumbotron{
-  position: relative;
-  z-index:-101;
-  height: 100%;
-  margin-bottom: 0;
+    position: relative;
+    z-index:-101;
+    height: 100%;
+    margin-bottom: 0;
+    background-color: black;
+    width: 100%;
+    display: table;
 }
 
 #video-background { 
@@ -17,6 +20,38 @@
     height: 100%;
 }
 
-.success {
+.main-text {
+    font-size: 30px;
+    color: #F8F8F8;
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    width: 100%;
     text-align: center;
+    
+    .small-text {
+        padding: 0 50px 50px 50px;
+        font-size: 20px;
+        
+        &.header {
+            font-size: 36px;
+        }
+    }
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.dogs-image {
+    background: url(assets/dogs.jpg) 50% 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -2;
+    opacity: 0.5;
 }

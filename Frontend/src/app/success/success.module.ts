@@ -1,9 +1,9 @@
 import {SuccessController} from './success.controller';
-import {Success} from './success.component';
+import {SuccessDirective} from './success.directive';
 
 angular
-    .module('app.success', [
+    .module('app.pages.success', [
 
     ])
-    .component('hdSuccess', new Success())
+    .directive('hdSuccess', SuccessDirective.create())
     .controller('SuccessController', SuccessController);
