@@ -1,10 +1,18 @@
 export class SuccessController {
-    public static $inject: Array<any> = [];
+    public static $inject:Array<any> = ['$element'];
 
-    public success: any;
+    public id:number
+    public selector;
 
-    constructor() {
-        //var gauge1 = this.loadLiquidFillGauge("fillgauge", 55, null);
+    public success:any;
+
+    constructor($element) {
+        this.id = Math.floor((Math.random() * 100) + 1);
+        this.selector = 'fillgauge' + this.id;
+
+        $element.find('svg').addClass(this.selector);
+
+        var gauge1 = this.loadLiquidFillGauge(this.selector, this.id, null);
     }
 
     liquidFillGaugeDefaultSettings() {
@@ -17,7 +25,7 @@ export class SuccessController {
             waveHeight: 0.05, // The wave height as a percentage of the radius of the wave circle.
             waveCount: 1, // The number of full waves per width of the wave circle.
             waveRiseTime: 1000, // The amount of time in milliseconds for the wave to rise from 0 to it's final height.
-            waveAnimateTime: 18000, // The amount of time in milliseconds for a full wave to enter the wave circle.
+            waveAnimateTime: 1000, // The amount of time in milliseconds for a full wave to enter the wave circle.
             waveRise: true, // Control if the wave should rise from 0 to it's full height, or start at it's full height.
             waveHeightScaling: true, // Controls wave size scaling at low and high fill percentages. When true, wave height reaches it's maximum at 50% fill, and minimum at 0% and 100% fill. This helps to prevent the wave from making the wave circle from appear totally full or empty when near it's minimum or maximum fill.
             waveAnimate: true, // Controls if the wave scrolls or is static.
@@ -26,7 +34,7 @@ export class SuccessController {
             textVertPosition: .5, // The height at which to display the percentage text withing the wave circle. 0 = bottom, 1 = top.
             textSize: 1, // The relative height of the text to display in the wave circle. 1 = 50%
             valueCountUp: true, // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
-            displayPercent: true, // If true, a % symbol is displayed after the value.
+            displayPercent: false, // If true, a % symbol is displayed after the value.
             textColor: "#045681", // The color of the value text when the wave does not overlap it.
             waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
         };
@@ -35,7 +43,7 @@ export class SuccessController {
     loadLiquidFillGauge(elementId, value, config) {
         if (config == null) config = this.liquidFillGaugeDefaultSettings();
 
-        var gauge = d3.select("." + elementId);
+        var gauge = d3.selectAll("." + elementId);
         var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
         var locationX = parseInt(gauge.style("width")) / 2 - radius;
         var locationY = parseInt(gauge.style("height")) / 2 - radius;
@@ -67,18 +75,24 @@ export class SuccessController {
         var waveClipWidth = waveLength * waveClipCount;
 
         // Rounding functions so that the correct number of decimal places is always displayed as the value counts up.
-        var textRounder = function(value): any { return Math.round(value); };
+        var textRounder = function (value):any {
+            return Math.round(value);
+        };
         if (parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
-            textRounder = function(value) { return parseFloat(value).toFixed(1); };
+            textRounder = function (value) {
+                return parseFloat(value).toFixed(1);
+            };
         }
         if (parseFloat(textFinalValue) != parseFloat(textRounder(textFinalValue))) {
-            textRounder = function(value) { return parseFloat(value).toFixed(2); };
+            textRounder = function (value) {
+                return parseFloat(value).toFixed(2);
+            };
         }
 
         // Data for building the clip wave area.
         var data = [];
         for (var i = 0; i <= 40 * waveClipCount; i++) {
-            data.push({ x: i / (40 * waveClipCount), y: (i / (40)) });
+            data.push({x: i / (40 * waveClipCount), y: (i / (40))});
         }
 
         // Scales for drawing the outer circle.
@@ -131,13 +145,19 @@ export class SuccessController {
 
         // The clipping wave area.
         var clipArea = d3.svg.area()
-            .x(function(d: any) { return waveScaleX(d.x); })
-            .y0(function(d: any) { return waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI)); })
-            .y1(function(d) { return (fillCircleRadius * 2 + waveHeight); });
+            .x(function (d:any) {
+                return waveScaleX(d.x);
+            })
+            .y0(function (d:any) {
+                return waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI));
+            })
+            .y1(function (d) {
+                return (fillCircleRadius * 2 + waveHeight);
+            });
         var waveGroup = gaugeGroup.append("defs")
             .append("clipPath")
             .attr("id", "clipWave" + elementId);
-        var wave: any = waveGroup.append("path")
+        var wave:any = waveGroup.append("path")
             .datum(data)
             .attr("d", clipArea)
             .attr("T", 0);
@@ -162,9 +182,11 @@ export class SuccessController {
 
         // Make the value count up.
         if (config.valueCountUp) {
-            var textTween = function() {
+            var textTween = function () {
                 var i = d3.interpolate(this.textContent, textFinalValue);
-                return function(t) { this.textContent = textRounder(i(t)) + percentText; }
+                return function (t) {
+                    this.textContent = textRounder(i(t)) + percentText;
+                }
             };
             text1.transition()
                 .duration(config.waveRiseTime)
@@ -181,7 +203,9 @@ export class SuccessController {
                 .transition()
                 .duration(config.waveRiseTime)
                 .attr('transform', 'translate(' + waveGroupXPosition + ',' + waveRiseScale(fillPercent) + ')')
-                .each("start", function() { wave.attr('transform', 'translate(1,0)'); }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
+                .each("start", function () {
+                    wave.attr('transform', 'translate(1,0)');
+                }); // This transform is necessary to get the clip wave positioned correctly when waveRise=true and waveAnimate=false. The wave will not position correctly without this, but it's not clear why this is actually necessary.
         } else {
             waveGroup.attr('transform', 'translate(' + waveGroupXPosition + ',' + waveRiseScale(fillPercent) + ')');
         }
@@ -195,26 +219,34 @@ export class SuccessController {
                 .ease('linear')
                 .attr('transform', 'translate(' + waveAnimateScale(1) + ',0)')
                 .attr('T', 1)
-                .each('end', function() {
+                .each('end', function () {
                     wave.attr('T', 0);
                     animateWave(config.waveAnimateTime);
                 });
         }
 
         function GaugeUpdater() {
-            this.update = function(value) {
+            this.update = function (value) {
                 var newFinalValue = parseFloat(value).toFixed(2);
-                var textRounderUpdater: any = function(value) { return Math.round(value); };
+                var textRounderUpdater:any = function (value) {
+                    return Math.round(value);
+                };
                 if (parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                    textRounderUpdater = function(value) { return parseFloat(value).toFixed(1); };
+                    textRounderUpdater = function (value) {
+                        return parseFloat(value).toFixed(1);
+                    };
                 }
                 if (parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {
-                    textRounderUpdater = function(value) { return parseFloat(value).toFixed(2); };
+                    textRounderUpdater = function (value) {
+                        return parseFloat(value).toFixed(2);
+                    };
                 }
 
-                var textTween = function() {
+                var textTween = function () {
                     var i = d3.interpolate(this.textContent, parseFloat(value).toFixed(2));
-                    return function(t) { this.textContent = textRounderUpdater(i(t)) + percentText; }
+                    return function (t) {
+                        this.textContent = textRounderUpdater(i(t)) + percentText;
+                    }
                 };
 
                 text1.transition()
@@ -238,9 +270,15 @@ export class SuccessController {
                 var newClipArea;
                 if (config.waveHeightScaling) {
                     newClipArea = d3.svg.area()
-                        .x(function(d: any) { return waveScaleX(d.x); })
-                        .y0(function(d: any) { return waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI)); })
-                        .y1(function(d) { return (fillCircleRadius * 2 + waveHeight); });
+                        .x(function (d:any) {
+                            return waveScaleX(d.x);
+                        })
+                        .y0(function (d:any) {
+                            return waveScaleY(Math.sin(Math.PI * 2 * config.waveOffset * -1 + Math.PI * 2 * (1 - config.waveCount) + d.y * 2 * Math.PI));
+                        })
+                        .y1(function (d) {
+                            return (fillCircleRadius * 2 + waveHeight);
+                        });
                 } else {
                     newClipArea = clipArea;
                 }
@@ -254,7 +292,7 @@ export class SuccessController {
                     .attr('d', newClipArea)
                     .attr('transform', 'translate(' + newWavePosition + ',0)')
                     .attr('T', '1')
-                    .each("end", function() {
+                    .each("end", function () {
                         if (config.waveAnimate) {
                             wave.attr('transform', 'translate(' + waveAnimateScale(0) + ',0)');
                             animateWave(config.waveAnimateTime);
