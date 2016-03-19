@@ -13,30 +13,30 @@ using WebApi.Models;
 
 namespace WebApi
 {
-    public class Startup
-    {
-        public Startup(IHostingEnvironment env)
-        {
-            // Set up configuration sources.
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+	public class Startup
+	{
+		public Startup(IHostingEnvironment env)
+		{
+			// Set up configuration sources.
+			var builder = new ConfigurationBuilder()
+				.AddJsonFile("appsettings.json")
+				.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
-            }
+			if (env.IsDevelopment())
+			{
+				// For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
+				builder.AddUserSecrets();
+			}
 
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-        }
+			builder.AddEnvironmentVariables();
+			Configuration = builder.Build();
+		}
 
-        public IConfigurationRoot Configuration { get; set; }
+		public IConfigurationRoot Configuration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
+		{
 			// Enable cors
 			services.AddCors(options =>
 			{
@@ -48,24 +48,24 @@ namespace WebApi
 
 			// Add framework services.
 			services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+				.AddSqlServer()
+				.AddDbContext<ApplicationDbContext>(options =>
+					options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+			services.AddIdentity<ApplicationUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultTokenProviders();
 
-            services.AddMvc();
+			services.AddMvc();
 
-            services.AddEntityFramework()
-                .AddSqlServer()
-                .AddDbContext<WebApiContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+			services.AddEntityFramework()
+				.AddSqlServer()
+				.AddDbContext<WebApiContext>(options =>
+					options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
 			// Add application services.
 
-        }
+		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -75,28 +75,11 @@ namespace WebApi
 
 			app.UseCors("AllowAll");
 
-			if (env.IsDevelopment())
-			{
-				app.UseBrowserLink();
-				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
+			app.UseDeveloperExceptionPage();
 
-				// For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
-				try
-				{
-					using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
-						.CreateScope())
-					{
-						serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
-							 .Database.Migrate();
-					}
-				}
-				catch { }
-			}
+			app.UseBrowserLink();
+			app.UseDeveloperExceptionPage();
+			app.UseDatabaseErrorPage();
 
 			app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
@@ -115,10 +98,14 @@ namespace WebApi
 
 
 			//Seed Database
-			DataSeeder.SeedData(app);
+			try
+			{
+				DataSeeder.SeedData(app);
+			}
+			catch { }
 		}
 
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
-    }
+		// Entry point for the application.
+		public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+	}
 }
