@@ -5,6 +5,6 @@ export class GalleryService {
     }
 
     public getData() {
-        return this.$http.get("http://hackaton-happydog-api.azurewebsites.net/api/gallery")
+        return this.$http.get("http://hackaton-happydog-api.azurewebsites.net/api/dogprofiles")
     }
 }

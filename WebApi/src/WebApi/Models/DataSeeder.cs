@@ -28,33 +28,7 @@ namespace WebApi.Models
 			WebApiContext db = (WebApiContext)app.ApplicationServices.GetRequiredService(typeof (WebApiContext));
 
 			/*
-			var actionFeed = new Action() {Id = "1", Value = "Покормить", Description = "Кормим или приносим еду."};
-			var actionPlay = new Action() { Id = "2", Value = "Поиграть", Description = "Играем или приносим игрушки для собак." };
-			var actionClean = new Action() { Id = "3", Value = "Убирать", Description = "Помочь убрать вольеры или почистить снег зимой." };
-
-			db.Action.Add(actionFeed);
-			db.Action.Add(actionPlay);
-			db.Action.Add(actionClean);
-
-			//Day schedule		
-			var daySchedule = new DaySchedule()
-			{
-				Id = "1",
-				Date = DateTime.Now,
-				Actions = new List<Action>() { actionClean, actionPlay },
-				Comment = "Очень важный комментарий"
-			};
-
-			//User schedules
-			var userSchedule = new UserSchedule()
-			{
-				Id = "1",
-				Schedule = new List<DaySchedule>() { daySchedule },
-				User = null
-			};
-
-			db.DaySchedules.Add(daySchedule);
-			db.UserSchedule.Add(userSchedule);
+			AddSchedule(db);
 			*/
 
 			/*
@@ -173,6 +147,45 @@ namespace WebApi.Models
 				Sex = "Мальчик",
 				ImgUrl = imagePath + @"Dog_12.jpg"
 			});
+		}
+
+	    private static void AddSchedule(WebApiContext db)
+	    {
+			#region Actions
+
+			var actionFeed = new Action() { Id = "1", Value = "Покормить", Description = "Кормим или приносим еду." };
+			var actionPlay = new Action() { Id = "2", Value = "Поиграть", Description = "Играем или приносим игрушки для собак." };
+			var actionClean = new Action() { Id = "3", Value = "Убирать", Description = "Помочь убрать вольеры или почистить снег зимой." };
+		    var actionDrive = new Action() {Id = "4", Value = "Подвезти", Description = "Подвезти на автомобиле."};
+			var actionMeeter = new Action() { Id = "5", Value = "Встретить", Description = "Встретить добровольцев в городе."};
+
+			#endregion
+
+			db.Action.Add(actionFeed);
+			db.Action.Add(actionPlay);
+			db.Action.Add(actionClean);
+		    db.Action.Add(actionDrive);
+		    db.Action.Add(actionMeeter);
+
+			//Day schedule		
+			var daySchedule = new DaySchedule()
+			{
+				Id = "1",
+				Date = DateTime.Now,
+				Actions = new List<Action>() { actionClean, actionPlay },
+				Comment = "Очень важный комментарий"
+			};
+
+			//User schedules
+			var userSchedule = new UserSchedule()
+			{
+				Id = "1",
+				Schedule = new List<DaySchedule>() { daySchedule },
+				User = null
+			};
+
+			db.DaySchedules.Add(daySchedule);
+			db.UserSchedule.Add(userSchedule);
 		}
 	}
 }
