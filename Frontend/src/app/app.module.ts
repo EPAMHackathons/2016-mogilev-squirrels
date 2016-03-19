@@ -15,6 +15,6 @@ angular
         'app.pages.main',
         'app.pages.galleryPage',
         'app.pages.timeline',
-        'app.pages.success'
+        'app.pages.success',
 
     ]).run(run);
