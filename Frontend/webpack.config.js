@@ -1,12 +1,13 @@
 var webpack = require('webpack');
 var path = require("path");
+var config = require("./build.json");
 
 module.exports = {
     entry: {
         'bundle': './src/app/app.ts'
     },
     output: {
-        path: path.resolve("./release/dest/"),
+        path: path.resolve(config.PATH),
         filename: "[name].js"
     },
     devtool: 'source-map',
