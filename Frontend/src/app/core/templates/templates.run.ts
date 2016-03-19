@@ -1,6 +1,7 @@
-angular.module("app.core.templates").run(["$templateCache", function($templateCache) {$templateCache.put("calendar/calendar.tpl.html","");
+angular.module("app.core.templates").run(["$templateCache", function($templateCache) {$templateCache.put("calendar/calendar.tpl.html","<div id=\"graphContainer\" class=\"graphContainer\">\r\n</div>");
 $templateCache.put("core/404.tpl.html","<h1>404</h1>");
 $templateCache.put("gallery/gallery.tpl.html","");
 $templateCache.put("success/success.tpl.html","<h1>Наши успехи</h1>");
-$templateCache.put("core/navbar/navbar.tpl.html","<h1>Navbar</h1>");
-$templateCache.put("pages/main/main.tpl.html","<h1>Main page</h1>");}]);
+$templateCache.put("core/navbar/navbar.tpl.html","<nav class=\"navbar navbar-default navbar-fixed-top\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <div class=\"university-name\" ng-bind=\"vm.universityName\"></div>\r\n        </div>\r\n        <ul class=\"nav navbar-nav pull-right\">\r\n            <li>\r\n                <img src=\"/assets/profile.png\" class=\"profile-image pull-left\" alt=\"\">\r\n                <a href=\"/profile\" class=\"pull-right\">Profile</a>\r\n            </li>\r\n            <li>\r\n                <div class=\"text\" ng-click=\"vm.logout()\">Log out</div>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n</nav>");
+$templateCache.put("pages/main/main.tpl.html","<h1>Main page</h1>");
+$templateCache.put("pages/timeline/timeline.tpl.html","<hd-calendar></hd-calendar>");}]);

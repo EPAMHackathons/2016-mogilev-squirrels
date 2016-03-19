@@ -6,5 +6,6 @@ angular
     .module('app', [
         'app.core',
 
-        'app.pages.main'
+        'app.pages.main',
+
     ]);

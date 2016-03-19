@@ -1,1 +1,16 @@
-<h1>Navbar</h1>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div class="university-name" ng-bind="vm.universityName"></div>
+        </div>
+        <ul class="nav navbar-nav pull-right">
+            <li>
+                <img src="/assets/profile.png" class="profile-image pull-left" alt="">
+                <a href="/profile" class="pull-right">Profile</a>
+            </li>
+            <li>
+                <div class="text" ng-click="vm.logout()">Log out</div>
+            </li>
+        </ul>
+    </div>
+</nav>
