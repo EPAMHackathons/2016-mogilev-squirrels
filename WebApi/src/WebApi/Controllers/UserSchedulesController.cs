@@ -28,7 +28,7 @@ namespace WebApi.Controllers
 
         // GET: api/UserSchedules/5
         [HttpGet("{id}", Name = "GetUserSchedule")]
-        public IActionResult GetUserSchedule([FromRoute] Guid id)
+        public IActionResult GetUserSchedule([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
 
         // PUT: api/UserSchedules/5
         [HttpPut("{id}")]
-        public IActionResult PutUserSchedule(Guid id, [FromBody] UserSchedule userSchedule)
+        public IActionResult PutUserSchedule(string id, [FromBody] UserSchedule userSchedule)
         {
             if (!ModelState.IsValid)
             {
@@ -111,7 +111,7 @@ namespace WebApi.Controllers
 
         // DELETE: api/UserSchedules/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteUserSchedule(Guid id)
+        public IActionResult DeleteUserSchedule(string id)
         {
             if (!ModelState.IsValid)
             {
@@ -139,7 +139,7 @@ namespace WebApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool UserScheduleExists(Guid id)
+        private bool UserScheduleExists(string id)
         {
             return _context.UserSchedule.Count(e => e.Id == id) > 0;
         }
