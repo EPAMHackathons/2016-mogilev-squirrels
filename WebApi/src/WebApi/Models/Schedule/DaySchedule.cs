@@ -7,7 +7,7 @@ namespace WebApi.Models
     public class DaySchedule
     {
 		[Required]
-	    public Guid Id { get; set; }
+	    public string Id { get; set; }
 
 	    public DateTime Date { get; set; }
 
