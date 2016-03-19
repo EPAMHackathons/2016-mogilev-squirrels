@@ -5,6 +5,8 @@
 	using Microsoft.AspNet.Authorization;
 	using Microsoft.AspNet.Identity;
 	using Microsoft.AspNet.Mvc;
+	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading.Tasks;
 	using VkNet;
@@ -68,9 +70,10 @@
 			appUser.UserName = profile.FirstName + " " + profile.LastName;
 			appUser.Email = user.Email;
 			appUser.UserAvatarUrl = this.GetUserPicture(vk);
+			appUser.SecurityStamp = Guid.NewGuid().ToString();
 
-			_userManager.CreateAsync(appUser, user.Password);
-			_signInManager.SignInAsync(appUser, true);
+			_userManager.CreateAsync(appUser, user.Password).Wait();
+			_signInManager.SignInAsync(appUser, true).Wait();
 
 			result = true;
 
@@ -84,12 +87,23 @@
 			return user;
 		}
 
+		[HttpGet("topUsers")]
+		public IList<UserViewModel> GetUsersTop()
+		{
+			return new List<UserViewModel>() {
+			new UserViewModel() { Name = "Артем Морозов", ImgUrl= "https://pp.vk.me/c630817/v630817262/13a11/WmiaPjP9BMw.jpg" },
+			new UserViewModel() { Name = "Стас Кругликов", ImgUrl = "https://pp.vk.me/c617321/v617321499/18550/h0esZSP5oSg.jpg" },
+			new UserViewModel() { Name = "Денис Пасюков", ImgUrl="https://pp.vk.me/c608223/v608223234/6ab6/wWBMGUwKQko.jpg" },
+			new UserViewModel() { Name = "Валентин Городков", ImgUrl="https://pp.vk.me/c9872/u120739048/-6/w_e0cb2027.jpg" }
+			 };
+		}
+
 		private string GetUserPicture(VkApi api)
 		{
 			long id = api.UserId.Value;
 			var user = api.Users.Get(id, ProfileFields.Photo200);
 			var photo = user.Photo200;
-			return photo.AbsoluteUri; //Photo.GetOwnerPhotoUploadServer(api.UserId.Value).UploadUrl;
+			return photo.AbsoluteUri;
 		}
 
 		private VkApi VkInit(string email, string password)

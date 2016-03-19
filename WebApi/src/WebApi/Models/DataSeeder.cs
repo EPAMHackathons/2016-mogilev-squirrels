@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Models.Gallery;
 
@@ -13,11 +10,8 @@ namespace WebApi.Models
     {
 	    private const string imagePath = @"http://hackaton-happydog-api.azurewebsites.net/images/gallery/";
 
-		// TODO: Move this code when seed data is implemented in EF 7
-
 		/// <summary>
-		/// This is a workaround for missing seed data functionality in EF 7.0-rc1
-		/// More info: https://github.com/aspnet/EntityFramework/issues/629
+		/// Fills Database with initial data
 		/// </summary>
 		/// <param name="app">
 		/// An instance that provides the mechanisms to get instance of the database context.
@@ -27,39 +21,8 @@ namespace WebApi.Models
 			
 			WebApiContext db = (WebApiContext)app.ApplicationServices.GetRequiredService(typeof (WebApiContext));
 
-			/*
-			var actionFeed = new Action() {Id = "1", Value = "Покормить", Description = "Кормим или приносим еду."};
-			var actionPlay = new Action() { Id = "2", Value = "Поиграть", Description = "Играем или приносим игрушки для собак." };
-			var actionClean = new Action() { Id = "3", Value = "Убирать", Description = "Помочь убрать вольеры или почистить снег зимой." };
-
-			db.Action.Add(actionFeed);
-			db.Action.Add(actionPlay);
-			db.Action.Add(actionClean);
-
-			//Day schedule		
-			var daySchedule = new DaySchedule()
-			{
-				Id = "1",
-				Date = DateTime.Now,
-				Actions = new List<Action>() { actionClean, actionPlay },
-				Comment = "Очень важный комментарий"
-			};
-
-			//User schedules
-			var userSchedule = new UserSchedule()
-			{
-				Id = "1",
-				Schedule = new List<DaySchedule>() { daySchedule },
-				User = null
-			};
-
-			db.DaySchedules.Add(daySchedule);
-			db.UserSchedule.Add(userSchedule);
-			*/
-
-			/*
-			AddDogProfiles(db);
-			*/
+			//AddSchedule(db);
+			//AddDogProfiles(db);
 
 			db.SaveChanges();
 		}
@@ -70,7 +33,7 @@ namespace WebApi.Models
 			{
 				Id = "1",
 				Name = "Тоня",
-				Description = "",
+				Description = "Очень хорошая собака.",
 				Sex = "Девочка",
 				ImgUrl = imagePath + @"Dog_1.jpg"
 			});
@@ -173,6 +136,45 @@ namespace WebApi.Models
 				Sex = "Мальчик",
 				ImgUrl = imagePath + @"Dog_12.jpg"
 			});
+		}
+
+	    private static void AddSchedule(WebApiContext db)
+	    {
+			#region Actions
+
+			var actionFeed = new Action() { Id = "1", Value = "Покормить", Description = "Кормим или приносим еду." };
+			var actionPlay = new Action() { Id = "2", Value = "Поиграть", Description = "Играем или приносим игрушки для собак." };
+			var actionClean = new Action() { Id = "3", Value = "Убирать", Description = "Помочь убрать вольеры или почистить снег зимой." };
+		    var actionDrive = new Action() {Id = "4", Value = "Подвезти", Description = "Подвезти на автомобиле."};
+			var actionMeeter = new Action() { Id = "5", Value = "Встретить", Description = "Встретить добровольцев в городе."};
+
+			#endregion
+
+			db.Action.Add(actionFeed);
+			db.Action.Add(actionPlay);
+			db.Action.Add(actionClean);
+		    db.Action.Add(actionDrive);
+		    db.Action.Add(actionMeeter);
+
+			//Day schedule		
+			var daySchedule = new DaySchedule()
+			{
+				Id = "1",
+				Date = DateTime.Now,
+				Actions = new List<Action>() { actionClean, actionPlay },
+				Comment = "Очень важный комментарий"
+			};
+
+			//User schedules
+			var userSchedule = new UserSchedule()
+			{
+				Id = "1",
+				Schedule = new List<DaySchedule>() { daySchedule },
+				User = null
+			};
+
+			db.DaySchedules.Add(daySchedule);
+			db.UserSchedule.Add(userSchedule);
 		}
 	}
 }

@@ -25,13 +25,13 @@
     </div>
 </div>
 
-<h1 class="text-center">Наши благодетели</h1>
+<h1 class="text-center">Топ пользователей</h1>
 
 <div class="container benefactors">
     <div class="benefector" ng-repeat="benefactor in ctrl.benefactors">
-        <div class="benefactor-image inline"></div>
-        <div class="inline">
-            <h1> {{benefactor.fullName}}</h1>
+        <div class="benefactor-image inline" ng-style="{'background-image': 'url(' + benefactor.ImgUrl + ')'}"></div>
+        <div class=" inline ">
+            <h1> {{benefactor.Name}}</h1>
         </div>
     </div>
 </div>
