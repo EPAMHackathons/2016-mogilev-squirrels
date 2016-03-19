@@ -4,14 +4,17 @@
             <h1 id="timeline">Календарь</h1>
         </div>
         <ul class="timeline">
-            <li ng-repeat="item in ctrl.items[0].Schedule" ng-class="{'timeline-inverted' : $even}">
-                <div class="timeline-badge"><i class="glyphicon glyphicon-check">{{item.Date}}</i></div>
+            <li ng-repeat="item in ctrl.items[0].Schedule" ng-class="{'timeline-inverted' : $even, 'timeline-none': !$even}">
+                <div class="timeline-badge date hover" date-format><p></p>
+                </div>
                 <div class="timeline-panel">
-                    <div class="timeline-heading">
-                        <h4 class="timeline-title">{{item.Actions[0].Description.Value}}</h4>
-                    </div>
-                    <div class="timeline-body">
-                        <p>{{item.Actions[0].Description}}</p>
+                    <div ng-repeat="action in item.Actions">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">{{item.Actions[0].Description.Value}}</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>{{action.Description}}</p>
+                        </div>
                     </div>
                 </div>
             </li>
