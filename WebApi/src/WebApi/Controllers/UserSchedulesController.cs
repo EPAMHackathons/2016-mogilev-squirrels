@@ -14,21 +14,22 @@ namespace WebApi.Controllers
     [Route("api/UserSchedules")]
     public class UserSchedulesController : Controller
     {
-        private WebApiContext _context;
+        private WebApiContext _context; // TO DO: move to repository
+	    private IRepository _repository;
 
-        public UserSchedulesController(WebApiContext context)
+        public UserSchedulesController(WebApiContext context, IRepository repository)
         {
-            _context = context;
+	        _context = context;
+	        _repository = repository;
         }
 
-        // GET: api/UserSchedules
+	    // GET: api/UserSchedules
         [HttpGet]
         public IEnumerable<UserSchedule> GetUserSchedule()
         {
 	        return _context.UserSchedule
 		        .Include(sched => sched.Schedule)
 		        .ThenInclude(t => t.Actions);
-
         }
 
         // GET: api/UserSchedules/5

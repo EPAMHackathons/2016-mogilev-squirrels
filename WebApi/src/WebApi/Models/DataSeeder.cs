@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Models.Gallery;
 
@@ -13,11 +10,8 @@ namespace WebApi.Models
     {
 	    private const string imagePath = @"http://hackaton-happydog-api.azurewebsites.net/images/gallery/";
 
-		// TODO: Move this code when seed data is implemented in EF 7
-
 		/// <summary>
-		/// This is a workaround for missing seed data functionality in EF 7.0-rc1
-		/// More info: https://github.com/aspnet/EntityFramework/issues/629
+		/// Fills Database with initial data
 		/// </summary>
 		/// <param name="app">
 		/// An instance that provides the mechanisms to get instance of the database context.
@@ -27,13 +21,8 @@ namespace WebApi.Models
 			
 			WebApiContext db = (WebApiContext)app.ApplicationServices.GetRequiredService(typeof (WebApiContext));
 
-			/*
-			AddSchedule(db);
-			*/
-
-			/*
-			AddDogProfiles(db);
-			*/
+			//AddSchedule(db);
+			//AddDogProfiles(db);
 
 			db.SaveChanges();
 		}
@@ -44,7 +33,7 @@ namespace WebApi.Models
 			{
 				Id = "1",
 				Name = "Тоня",
-				Description = "",
+				Description = "Очень хорошая собака.",
 				Sex = "Девочка",
 				ImgUrl = imagePath + @"Dog_1.jpg"
 			});
