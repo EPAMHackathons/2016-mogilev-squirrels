@@ -63,7 +63,8 @@ namespace WebApi
                 .AddDbContext<WebApiContext>(options =>
                     options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=WebApiContext-9d218697-d4fa-4e26-97e1-b104348b22bf;Trusted_Connection=True;MultipleActiveResultSets=true"));
 
-            // Add application services.
+			// Add application services.
+
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,6 +112,10 @@ namespace WebApi
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+
+
+			//Seed Database
+			DataSeeder.SeedData(app);
 		}
 
         // Entry point for the application.
