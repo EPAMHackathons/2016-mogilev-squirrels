@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Data.Entity;
@@ -84,34 +85,44 @@ namespace WebApi.Controllers
             return new HttpStatusCodeResult(StatusCodes.Status204NoContent);
         }
 
-        // POST: api/UserSchedules
-        [HttpPost]
-        public IActionResult PostUserSchedule([FromBody] UserSchedule userSchedule)
-        {
-            if (!ModelState.IsValid)
-            {
-                return HttpBadRequest(ModelState);
-            }
+		// POST: api/UserSchedules/
+	    [HttpPost]
+		public IActionResult PostAddDailyschedule([FromBody] DaySchedule daySchedule)
+	    {
+			if (!ModelState.IsValid)
+			{
+				return HttpBadRequest(ModelState);
+			}
 
-            _context.UserSchedule.Add(userSchedule);
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserScheduleExists(userSchedule.Id))
-                {
-                    return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			//var userId = User.GetUserId();
+			string userId = "a891b06a-d634-48b7-9246-60a0b3d3bb9f";
+		    //var user = _context.Users.FirstOrDefault(u => u.Id == userId);
 
-            return CreatedAtRoute("GetUserSchedule", new { id = userSchedule.Id }, userSchedule);
-        }
+		    var userSchedule = _context.UserSchedule
+				.Include(sc => sc.Schedule)
+				.FirstOrDefault(sc => sc.User.Id == userId);
+
+			userSchedule?.Schedule.Add(daySchedule);
+
+		    //_context.UserSchedule.Add(userSchedule);
+			try
+			{
+				_context.SaveChanges();
+			}
+			catch (DbUpdateException)
+			{
+				if (UserScheduleExists(userSchedule.Id))
+				{
+					return new HttpStatusCodeResult(StatusCodes.Status409Conflict);
+				}
+				else
+				{
+					throw;
+				}
+			}
+
+			return CreatedAtRoute("GetUserSchedule", new { id = userSchedule.Id }, userSchedule);
+		}
 
         // DELETE: api/UserSchedules/5
         [HttpDelete("{id}")]
