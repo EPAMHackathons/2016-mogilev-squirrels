@@ -24,12 +24,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IEnumerable<Action> GetAction()
         {
-			try {
-				return _context.Action.ToList();
-			}catch(Exception ex)
-			{
-				return new Action[] { new Action() { Value = ex.Message } };
-			}
+			return _context.Action.ToList();
         }
 
         // GET: api/Actions/5
