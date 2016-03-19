@@ -1,15 +1,26 @@
 <div class="jumbotron">
-    <video id="video-background" preload muted autoplay loop>
-        <source src="http://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-        <source src="http://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg">
-    </video>
-    <div class="container">
-        Hello World
+    <div class="dogs-image"></div>
+    <div class="container main-text">
+        <div class="small-text header">
+            МГКУ «Спецавтопредприятие» -основной функцией которого является перевозка и утилизация ТБО. транспортные услуги, сбор и реализация
+            вторсырья, отстрел собак и кошек
+        </div>
+        <div class="small-text">
+            Каждый день наши волонтеры посещают вольеры, где стоят собаки, что бы покормить их и убрать у них. Каждый волонтер или двое
+            берут на себя 1 день посещения. Посещения в определенное время с 9.00 до 11.00
+        </div>
+        <div class="small-text">
+            Животные, которые содержатся в САПе "усыпляются" дитилином по истечении 5 суток.
+        </div>
     </div>
 </div>
 
-<h1 class="success">Наши успехи</h1>
+<h1 class="text-center">Наши успехи</h1>
 
-<div ng-repeat="success in ctrl.successes">
-    <hd-success success="success"></hd-success>
+<div class="row">
+    <div ng-repeat="success in ctrl.successes" class="col-lg-3 col-sm-6">
+        <hd-success success="success"></hd-success>
+    </div>
 </div>
+
+<h1 class="text-center">Наши благодетели</h1>

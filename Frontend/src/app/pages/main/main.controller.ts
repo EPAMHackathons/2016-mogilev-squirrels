@@ -6,16 +6,16 @@ export class MainController {
     constructor() {
         this.successes = [
             {
-                text: 'Успех 1'
+                text: 'Зарегистрировано'
             },
             {
-                text: 'Успех 2'
+                text: 'Нашли свой дом'
             },
             {
-                text: 'Успех 3'
+                text: 'Нужно на содержание'
             },
             {
-                text: 'Успех 4'
+                text: 'Нуждаеться в ВАС'
             }
         ];
     }
