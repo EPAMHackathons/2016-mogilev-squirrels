@@ -1,9 +1,11 @@
-﻿using Microsoft.Data.Entity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
+using WebApi.Models;
 
 namespace WebApi.Models
 {
-    public class WebApiContext : DbContext
-    {
+    public class WebApiContext : IdentityDbContext
+	{
         private static bool _created = false;
 
         public WebApiContext()
@@ -21,8 +23,12 @@ namespace WebApi.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-        }
+			base.OnModelCreating(builder);
+		}
 
         public DbSet<Action> Action { get; set; }
-    }
+
+        public DbSet<UserSchedule> UserSchedule { get; set; }
+
+	}
 }
