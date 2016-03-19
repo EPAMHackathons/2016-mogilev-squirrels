@@ -21,7 +21,9 @@ namespace WebSite
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-            app.UseIISPlatformHandler();
+			app.UseDefaultFiles(new Microsoft.AspNet.StaticFiles.DefaultFilesOptions() { DefaultFileNames = new[] { "index.html" } });
+			app.UseIISPlatformHandler();
+			app.UseStaticFiles();
 			app.UseCors(builder =>
 			{
 				builder.AllowAnyHeader();

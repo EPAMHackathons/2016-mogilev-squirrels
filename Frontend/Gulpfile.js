@@ -104,5 +104,5 @@ var config = {
             //root: '/',
         }
     },
-    temp: './src/core/templates/'
+    temp: './src/app/core/templates/'
 };
